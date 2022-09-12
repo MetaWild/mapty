@@ -1,4 +1,6 @@
 'use strict';
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 
 // prettier-ignore
 
@@ -105,7 +107,7 @@ class App {
   _loadMap(position) {
     const { latitude } = position.coords;
     const { longitude } = position.coords;
-    console.log(`https://www.google.pt/maps/@${latitude},${longitude}`);
+    // console.log(`https://www.google.pt/maps/@${latitude},${longitude}`);
 
     const coords = [latitude, longitude];
 
@@ -210,6 +212,7 @@ class App {
   }
 
   _renderWorkout(workout) {
+    if (!workout) return;
     let html = `
     <li class="workout workout--${workout.type}" data-id="${workout.id}">
           <div class="top">
@@ -258,10 +261,9 @@ class App {
     }
 
     form.insertAdjacentHTML('afterend', html);
-    this.#closeButton = document.querySelectorAll('.close');
-    this.#closeButton.forEach(close =>
-      close.addEventListener('click', this._closeOne.bind(this))
-    );
+    this.#closeButton = document
+      .querySelector('.close')
+      .addEventListener('click', this._closeOne.bind(this));
   }
   _moveToPopup(e) {
     const workoutEl = e.target.closest('.workout');
@@ -280,21 +282,21 @@ class App {
   }
 
   _setLocalStorage() {
-    this.#workouts.forEach(workout =>
+    /* this.#workouts.forEach(workout =>
       localStorage.setItem(`${workout.id}`, JSON.stringify(workout))
-    );
-    /*localStorage.setItem('workouts', JSON.stringify(this.#workouts)); */
+    ); */
+    localStorage.setItem('workouts', JSON.stringify(this.#workouts));
   }
 
   _getLocalStorage() {
-    let data = [];
+    /* let data = [];
     const keys = Object.keys(localStorage);
     let i = keys.length - 1;
     while (i > -1) {
       data.push(JSON.parse(localStorage.getItem(keys[i])));
       i--;
-    }
-    /*const data = JSON.parse(localStorage.getItem('workouts'));*/
+    } */
+    const data = JSON.parse(localStorage.getItem('workouts'));
 
     if (!data) return;
 
@@ -306,25 +308,28 @@ class App {
   }
 
   _reset(e) {
-    this.#workouts.forEach(workout => localStorage.removeItem(`${workout.id}`));
-    /*this.localStorage.removeItem('workouts');*/
+    /*this.#workouts.forEach(workout => localStorage.removeItem(`${workout.id}`));*/
+    localStorage.removeItem('workouts');
     this.#workouts = [];
+    containerWorkouts.innerHTML = '';
     location.reload();
   }
 
-  _closeOne(e) {
+  _closeOne = function (e) {
+    e.preventDefault();
+    localStorage.removeItem('workouts');
     const workoutEl = e.target.closest('.workout');
-
     const workout = this.#workouts.find(
       work => work.id === workoutEl.dataset.id
     );
 
     const index = this.#workouts.indexOf(workout);
-
     this.#workouts.splice(index, 1);
-    localStorage.removeItem(`${workout.id}`);
+    this._setLocalStorage();
+    containerWorkouts.innerHTML = '';
     location.reload();
-  }
+    // this._getLocalStorage();
+  };
 }
 
 const app = new App();

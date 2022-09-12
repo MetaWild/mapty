@@ -20,5 +20,9 @@
   "devDependencies": {
     "cssnano": "^5.1.13",
     "postcss": "^8.4.16"
+  },
+  "dependencies": {
+    "core-js": "^3.25.1",
+    "regenerator-runtime": "^0.13.9"
   }
 }
