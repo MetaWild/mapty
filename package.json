@@ -1,7 +1,7 @@
 {
   "name": "mapty",
   "version": "1.0.0",
-  "description": "",
+  "description": "Track your workouts",
   "default": "index.html",
   "scripts": {
     "start": "parcel index.html",
@@ -19,6 +19,7 @@
   "homepage": "https://github.com/MetaWild/mapty#readme",
   "devDependencies": {
     "cssnano": "^5.1.13",
+    "parcel": "^2.7.0",
     "postcss": "^8.4.16"
   },
   "dependencies": {
