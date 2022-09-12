@@ -1,0 +1,24 @@
+{
+  "name": "mapty",
+  "version": "1.0.0",
+  "description": "",
+  "default": "index.html",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html --dist-dir ./dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MetaWild/mapty.git"
+  },
+  "author": "Meta",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MetaWild/mapty/issues"
+  },
+  "homepage": "https://github.com/MetaWild/mapty#readme",
+  "devDependencies": {
+    "cssnano": "^5.1.13",
+    "postcss": "^8.4.16"
+  }
+}
